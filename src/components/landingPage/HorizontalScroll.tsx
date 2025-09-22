@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import localFont from "next/font/local";
 import Img from "../../../public/images/card.webp";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -74,6 +74,7 @@ const ProductCard: React.FC<{ drink: Drink }> = ({ drink }) => {
 
 export default function HorizontalScrollableCards() {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   const scrollBy = (dir: "left" | "right") => {
     const el = containerRef.current;
@@ -82,6 +83,34 @@ export default function HorizontalScrollableCards() {
     const scrollAmount = dir === "left" ? -cardWidth * 2 : cardWidth * 2;
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollLeft = container.scrollLeft;
+      const containerWidth = container.offsetWidth;
+      const scrollWidth = container.scrollWidth;
+      
+      // Calculate progress as a percentage and convert to card index
+      const scrollProgress = scrollLeft / (scrollWidth - containerWidth);
+      const currentCard = Math.ceil(scrollProgress * sampleDrinks.length) || 1;
+      
+      setCurrentIndex(Math.min(Math.max(currentCard, 1), sampleDrinks.length));
+    };
+
+    // Initial calculation
+    handleScroll();
+
+    container.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [sampleDrinks.length]);
 
   return (
     <div className={`w-full text-white`}>
@@ -95,9 +124,10 @@ export default function HorizontalScrollableCards() {
 
       <div className="relative">
         {/* Horizontal scroll container */}
+        
         <div
           ref={containerRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
+          className="flex grid-cols-2 ml-0 mr-0 md:grid-cols-3 xl:grid-cols-4 gap-2 xl:gap-8 xl:ml-30 xl:mr-30 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
           style={{ scrollSnapType: "x mandatory" }}
           role="list"
         >
@@ -121,34 +151,12 @@ export default function HorizontalScrollableCards() {
             }
           `}</style>
         </div>
-        <div
-          ref={containerRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
-          style={{ scrollSnapType: "x mandatory" }}
-          role="list"
-        >
-          {sampleDrinks.map((d) => (
-            <div role="listitem" key={d.id} className="snap-start">
-              <ProductCard drink={d} />
-            </div>
-          ))}
-          <style jsx>{`
-            /* Hide scrollbar for Chrome, Safari and Opera */
-            .no-scrollbar::-webkit-scrollbar {
-              display: none;
-              width: 0;
-              height: 0;
-            }
 
-            /* Hide scrollbar for IE, Edge and Firefox */
-            .no-scrollbar {
-              -ms-overflow-style: none; /* IE and Edge */
-              scrollbar-width: none; /* Firefox */
-            }
-          `}</style>
-        </div>
-        <div>
-            
+        {/* Scroll Position Indicator */}
+        <div className="flex justify-center mt-2">
+          <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-600 dark:text-gray-400 font-medium">
+            {currentIndex} / {sampleDrinks.length}
+          </div>
         </div>
       </div>
       <div className="w-full flex justify-center items-center  ">

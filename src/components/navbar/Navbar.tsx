@@ -1,6 +1,6 @@
-"use client"; // if you’re in /app dir
+"use client"; // if you're in /app dir
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import TransitionLink from "../TransitionLink";
@@ -9,7 +9,45 @@ import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
+
+  // Scroll handler for hiding/showing navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show navbar when at top of page (normal sticky behavior)
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      }
+      // Hide when scrolling down, show when scrolling up (fixed behavior)
+      else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+        setIsMenuOpen(false); // Close mobile menu when hiding
+      } else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    // Throttle scroll events for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", throttledHandleScroll);
+    return () => window.removeEventListener("scroll", throttledHandleScroll);
+  }, [lastScrollY]);
 
   const navItems: { label: string; path: string }[] = [
     { label: "Home", path: "/" },
@@ -25,25 +63,32 @@ const Navbar: React.FC = () => {
   const totalItems = 2;
 
   return (
-    <div className="w-full relative z-50">
-      <div className="flex items-center justify-between px-3 md:px-10 py-2">
+    <div 
+      className={`w-full ${lastScrollY > 10 ? 'fixed' : 'sticky'} top-0 left-0 right-0 z-50 transition-transform duration-300 ease-in-out ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
+      {/* Background blur overlay */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-md border-b border-white/10"></div>
+      
+      {/* Navbar content */}
+      <div className="relative flex items-center justify-between px-3 md:px-10 py-2">
         {/* Left: Logo */}
-        <div className="h-11 flex-shrink-0 mt-3">
+        <div className="h-10 md:h-13 lg:h-15 flex-shrink-0 mt-3 overflow-x-hidden">
           <Link href="/">
-          <Image
-            src={LOGOV1}
-            
-            alt="Company Logo"
-            className="w-full" // ✅ Tailwind class here
-            width={100} // ✅ required unless using fill
-            height={11} // ✅ pick actual size of image
-            priority // optional: preload for faster LCP
-          />
+            <Image
+              src={LOGOV1}
+              alt="Company Logo"
+              className="w-auto h-full object-contain" // w-auto lets it scale naturally
+              width={200} // Larger base width
+              height={70} // Match your largest height (lg:h-20 = 80px)
+              priority
+            />
           </Link>
         </div>
 
         {/* Center: Desktop Nav Menu */}
-        <div className="hidden lg:flex flex-1 justify-center">
+        <div className="hidden lg:flex flex-1 justify-center min-w-0">
           <div className="w-full max-w-lg bg-black/20 backdrop-blur-md rounded-3xl shadow-lg border border-white/30 px-2 py-1">
             <ul className="flex h-full justify-between gap-1">
               {navItems.map((item) => {
@@ -86,11 +131,11 @@ const Navbar: React.FC = () => {
                 alt="Cart"
                 className="w-full h-full object-contain"
               />
-              {totalItems > 0 && (
+              {/*{totalItems > 0 && (
                 <span className="animate-bounce absolute -top-2 -right-2 min-w-[18px] h-[18px] text-xs bg-red-600 text-white rounded-full flex items-center justify-center px-[5px]">
-                  {totalItems}
+                  {0}
                 </span>
-              )}
+              )}*/}
             </div>
           </Link>
         </div>
@@ -149,7 +194,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Nav Dropdown */}
       {isMenuOpen && (
-        <div className="lg:hidden fixed top-[70px] left-4 right-4 z-40 bg-black/30 backdrop-blur-md rounded-xl shadow-md border border-white/10">
+        <div className="lg:hidden absolute top-full left-4 right-4 z-40 bg-black/30 backdrop-blur-md rounded-xl shadow-md border border-white/10 mt-2">
           <ul className="flex flex-col items-center gap-2 py-4 px-4">
             {navItems.map((item) => {
               const isActive = pathname === item.path;

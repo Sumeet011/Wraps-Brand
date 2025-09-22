@@ -19,7 +19,7 @@ interface InfiniteMovingCardsProps {
 
 export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
   items,
-  direction = "left",
+  direction = "right", // Changed default to "right" for opposite flow
   speed = "fast",
   pauseOnHover = true,
   className
@@ -51,9 +51,10 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
 
   const getDirection = () => {
     if (containerRef.current) {
+      // Reversed the logic: "right" now uses "forwards", "left" uses "reverse"
       containerRef.current.style.setProperty(
         "--animation-direction",
-        direction === "left" ? "forwards" : "reverse"
+        direction === "right" ? "forwards" : "reverse"
       );
     }
   };
@@ -73,7 +74,7 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
     }
   };
 
-  // NEW: Drag-to-scroll functionality
+  // Drag-to-scroll functionality
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -83,6 +84,8 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
     setStartX(e.clientX);
     if (containerRef.current) {
       setScrollLeft(containerRef.current.scrollLeft);
+      // Pause animation when starting to drag
+      containerRef.current.style.animationPlayState = "paused";
     }
   };
 
@@ -97,10 +100,18 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    // Resume animation when drag ends
+    if (containerRef.current) {
+      containerRef.current.style.animationPlayState = "running";
+    }
   };
 
   const handleMouseLeave = () => {
     setIsDragging(false);
+    // Resume animation when mouse leaves
+    if (containerRef.current) {
+      containerRef.current.style.animationPlayState = "running";
+    }
   };
 
   return (
@@ -112,7 +123,7 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
       onMouseUp={handleMouseUp} // End drag
       onMouseLeave={handleMouseLeave} // End drag if mouse leaves the container
       className={cn(
-        "scroller relative z-20 max-w-7xl overflow-x-auto py-4", // Added overflow-x-auto for horizontal scrolling
+        "scroller relative z-20 max-w-7xl overflow-x-auto py-4 cursor-grab active:cursor-grabbing", // Added cursor styles for better UX
         className
       )}
     >
@@ -124,10 +135,10 @@ export const InfiniteMovingCards: React.FC<InfiniteMovingCardsProps> = ({
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
-        {items.map((item) => (
+        {items.map((item, index) => (
           <li
-            className="relative  w-[350px] max-w-full shrink-0 rounded-2xl border border-b-0 border-zinc-200 bg-[linear-gradient(180deg,#fafafa,#f5f5f5)] px-8 py-6 md:w-[450px] dark:border-zinc-700 dark:bg-[linear-gradient(180deg,#27272a,#18181b)]"
-            key={item.name}
+            className="relative w-[350px] max-w-full shrink-0 rounded-2xl border border-b-0 border-zinc-200 bg-[linear-gradient(180deg,#fafafa,#f5f5f5)] px-8 py-6 md:w-[450px] dark:border-zinc-700 dark:bg-[linear-gradient(180deg,#27272a,#18181b)]"
+            key={`${item.name}-${index}`} // Better key to handle duplicate names
           >
             <blockquote>
               <div

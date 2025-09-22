@@ -375,10 +375,11 @@ class App {
     this.onCheck();
   }
   onWheel(e) {
-    const delta = e.deltaY || e.wheelDelta || e.detail;
-    this.scroll.target += delta > 0 ? this.scrollSpeed : -this.scrollSpeed;
-    this.onCheckDebounce();
-  }
+  const delta = e.deltaY || e.wheelDelta || e.detail;
+  // Flip the scroll direction by negating the speed
+  this.scroll.target += delta > 0 ? -this.scrollSpeed : this.scrollSpeed;
+  this.onCheckDebounce();
+}
   onCheck() {
     if (!this.medias || !this.medias[0]) return;
     const width = this.medias[0].width;
