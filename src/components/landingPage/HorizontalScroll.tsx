@@ -159,6 +159,43 @@ export default function HorizontalScrollableCards() {
           </div>
         </div>
       </div>
+      <div className="relative">
+        {/* Horizontal scroll container */}
+        
+        <div
+          ref={containerRef}
+          className="flex grid-cols-2 ml-0 mr-0 md:grid-cols-3 xl:grid-cols-4 gap-2 xl:gap-8 xl:ml-30 xl:mr-30 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
+          style={{ scrollSnapType: "x mandatory" }}
+          role="list"
+        >
+          {sampleDrinks.map((d) => (
+            <div role="listitem" key={d.id} className="snap-start">
+              <ProductCard drink={d} />
+            </div>
+          ))}
+          <style jsx>{`
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            .no-scrollbar::-webkit-scrollbar {
+              display: none;
+              width: 0;
+              height: 0;
+            }
+
+            /* Hide scrollbar for IE, Edge and Firefox */
+            .no-scrollbar {
+              -ms-overflow-style: none; /* IE and Edge */
+              scrollbar-width: none; /* Firefox */
+            }
+          `}</style>
+        </div>
+
+        {/* Scroll Position Indicator */}
+        <div className="flex justify-center mt-2">
+          <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-600 dark:text-gray-400 font-medium">
+            {currentIndex} / {sampleDrinks.length}
+          </div>
+        </div>
+      </div>
       <div className="w-full flex justify-center items-center  ">
             <button className="bg-[#9AE600] text-black font-bold py-2 mt-2 px-4 rounded-full hover:bg-green-600 transition duration-300"> 
               See All
