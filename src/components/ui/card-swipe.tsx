@@ -40,7 +40,7 @@ export const CardSwipe: React.FC<CarouselProps> = ({
 
     .swiper-slide img {
       display: block;
-      width: 250px; /* set fixed width for cards */
+      width: 150px; /* set fixed width for cards */
       height: auto;
       border-radius: 16px;
     }
@@ -49,18 +49,13 @@ export const CardSwipe: React.FC<CarouselProps> = ({
   return (
     <section className="w-full">
       <style>{css}</style>
-      <div className="mx-auto max-w-4xl rounded-[24px] border border-black/5 p-2 shadow-sm">
-        <div className="relative mx-auto flex flex-col rounded-[24px] border border-black/5 bg-neutral-800/5 p-2">
-          <Badge
-            variant="outline"
-            className="absolute left-4 top-6 rounded-[14px] border border-black/10 text-base"
-          >
-            <SparklesIcon className="fill-[#EEBDE0] stroke-1 text-neutral-800" /> Latest component
-          </Badge>
+      <div className="mx-auto max-w-4xl rounded-[24px] border border-black/5 p-1">
+        <div className="relative mx-auto flex flex-col rounded-[24px]">
+          
 
-          <div className="flex flex-col justify-center pb-2 pt-14 pl-4 items-center">
-            <h3 className="text-4xl font-bold tracking-tight opacity-85">Card Swipe</h3>
-            <p className="flex items-center gap-1">Seamless Images carousel animation.</p>
+          <div className="flex flex-col justify-center pb-2 pt-5 pl-4 items-center">
+            
+            <h3 className="text-4xl font-bold tracking-tight opacity-85">Spider Man</h3>
           </div>
 
           <div className="flex justify-center items-center">
@@ -77,8 +72,8 @@ export const CardSwipe: React.FC<CarouselProps> = ({
                 <SwiperSlide key={index}>
                   <Image
                     src={image.src}
-                    width={250}
-                    height={250}
+                    width={230}
+                    height={200}
                     className="rounded-xl"
                     alt={image.alt}
                   />

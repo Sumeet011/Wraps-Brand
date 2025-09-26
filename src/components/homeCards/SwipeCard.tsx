@@ -10,11 +10,19 @@ const cardswipe = () => {
     ]
 
   return (
-   <div className="w-full flex flex-col gap-1 md:flex-row">
+   <div className="w-full 
+  grid 
+  grid-cols-2          /* 2 on phones */
+  sm:grid-cols-3       /* 3 on tablets */
+  lg:grid-cols-4       /* 4 on laptops */
+  gap-4 m-4">              
+
+  <CardSwipe images={images} autoplayDelay={2000} slideShadows={false} />
   <CardSwipe images={images} autoplayDelay={2000} slideShadows={false} />
   <CardSwipe images={images} autoplayDelay={2000} slideShadows={false} />
   <CardSwipe images={images} autoplayDelay={2000} slideShadows={false} />
 </div>
+
 
   )
 }
