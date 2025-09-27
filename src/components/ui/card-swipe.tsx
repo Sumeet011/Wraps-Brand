@@ -39,11 +39,19 @@ export const CardSwipe: React.FC<CarouselProps> = ({
     }
 
     .swiper-slide img {
-      display: block;
-      width: 150px; /* set fixed width for cards */
-      height: auto;
-      border-radius: 16px;
-    }
+  display: block;
+  width: 130px; /* default width */
+  height: auto;
+  border-radius: 16px;
+}
+
+/* Media query for small screens or larger (example for sm breakpoint) */
+@media (min-width: 640px) {
+  .swiper-slide img {
+    width: 150px;
+  }
+}
+
   `
 
   return (
@@ -55,34 +63,52 @@ export const CardSwipe: React.FC<CarouselProps> = ({
 
           <div className="flex flex-col justify-center pb-2 pt-5 pl-4 items-center">
             
-            <h3 className="text-4xl font-bold tracking-tight opacity-85">Spider Man</h3>
+            <h3 className="text-2xl md:text-3xl font-bold tracking-tight opacity-85">Spider Man</h3>
           </div>
 
           <div className="flex justify-center items-center">
             <Swiper
-              autoplay={{ delay: autoplayDelay, disableOnInteraction: false }}
-              effect={"cards"}
-              grabCursor={true}
-              loop={true}
-              slidesPerView={"auto"}
-              cardsEffect={{ slideShadows }}
-              modules={[EffectCards, Autoplay, Pagination, Navigation]}
-            >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <Image
-                    src={image.src}
-                    width={230}
-                    height={200}
-                    className="rounded-xl"
-                    alt={image.alt}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+                effect={"cards"}
+                grabCursor={true}
+                loop={true}
+                slidesPerView={"auto"}
+                cardsEffect={{
+                  slideShadows: slideShadows,
+                }}
+                modules={[EffectCards, Pagination, Navigation]}
+              >
+                {images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="size-full rounded-3xl mt-2 ">
+                      <Image
+                        src={image.src}
+                        width={180}
+                        height={180}
+                        className="size-full rounded-xl "
+                        alt={image.alt}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+                {images.map((image, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="size-full rounded-3xl">
+                      <Image
+                        src={image.src}
+                        width={180}
+                        height={180}
+                        className="size-full rounded-xl"
+                        alt={image.alt}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
           </div>
         </div>
       </div>
     </section>
   )
 }
+
+
