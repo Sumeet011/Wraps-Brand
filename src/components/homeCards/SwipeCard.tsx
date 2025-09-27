@@ -4,9 +4,9 @@ import React from "react"
 const cardswipe = () => {
 
     const images = [
-        {src:'/images/card1.webp',alt:"Image 1"},
-        {src:'/images/card2.webp',alt:"Image 2"},
-        {src:'/images/card3.webp',alt:"Image 3"},
+        {src:'/images/1 (1).webp',alt:"Image 1"},
+        {src:'/images/2.webp',alt:"Image 2"},
+        {src:'/images/3.webp',alt:"Image 3"},
     ]
 
   return (
