@@ -89,20 +89,7 @@ export const CardSwipe: React.FC<CarouselProps> = ({
                       />
                     </div>
                   </SwiperSlide>
-                ))}
-                {images.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="size-full rounded-3xl">
-                      <Image
-                        src={image.src}
-                        width={180}
-                        height={180}
-                        className="size-full rounded-xl"
-                        alt={image.alt}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
+                ))
               </Swiper>
           </div>
         </div>
