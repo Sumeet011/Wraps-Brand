@@ -70,8 +70,8 @@ export const CardSwipe: React.FC<CarouselProps> = ({
             <Swiper
                 effect={"cards"}
                 grabCursor={true}
-                loop={true}
                 slidesPerView={"auto"}
+                allowTouchMove={true}
                 cardsEffect={{
                   slideShadows: slideShadows,
                 }}
@@ -85,19 +85,6 @@ export const CardSwipe: React.FC<CarouselProps> = ({
                         width={180}
                         height={180}
                         className="size-full rounded-xl "
-                        alt={image.alt}
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-                {images.map((image, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="size-full rounded-3xl">
-                      <Image
-                        src={image.src}
-                        width={180}
-                        height={180}
-                        className="size-full rounded-xl"
                         alt={image.alt}
                       />
                     </div>
