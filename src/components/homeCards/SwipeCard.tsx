@@ -17,10 +17,10 @@ const cardswipe = () => {
   lg:grid-cols-4       /* 4 on laptops */
   gap-4 m-4"
     >
-      <CardSwipe images={images} slideShadows={true} />
-      <CardSwipe images={images} slideShadows={true} />
-      <CardSwipe images={images} slideShadows={true} />
-      <CardSwipe images={images} slideShadows={true} />
+      <CardSwipe images={images} slideShadows={false} />
+      <CardSwipe images={images} slideShadows={false} />
+      <CardSwipe images={images} slideShadows={false} />
+      <CardSwipe images={images} slideShadows={false} />
     </div>
   );
 };

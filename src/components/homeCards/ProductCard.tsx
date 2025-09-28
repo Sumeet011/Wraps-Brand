@@ -36,7 +36,7 @@ const ProductCard: React.FC<{ drink: Drink }> = ({ drink }) => {
   return (
      <a
       href={`/drinks/${drink.id}`}
-      className="group relative bg-[#1a1816] rounded-2xl p-4 text-white shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col h-[280px] w-[190px] xl:h-[350px] xl:w-[240px] snap-start"
+      className="group relative bg-[#1a1816] rounded-2xl p-4 text-white shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col h-[280px] w-[190px] md:h-[350px] md:w-[240px] snap-start"
     >
       <div className="relative overflow-hidden rounded-xl h-[300px]">
         <img
@@ -96,7 +96,7 @@ export default function HorizontalScrollableCards() {
       </div>
 
       <div >
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 xl:gap-8 xl:ml-30 xl:mr-30">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2 sm:ml-20 xl:gap-8 xl:ml-30 xl:mr-30">
           {sampleDrinks.map((drink) => (
 
             <Suspense

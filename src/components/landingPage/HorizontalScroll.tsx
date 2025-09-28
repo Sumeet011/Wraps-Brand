@@ -75,6 +75,7 @@ const ProductCard: React.FC<{ drink: Drink }> = ({ drink }) => {
 export default function HorizontalScrollableCards() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex1, setCurrentIndex1] = useState(1);
 
   const scrollBy = (dir: "left" | "right") => {
     const el = containerRef.current;
@@ -98,6 +99,7 @@ export default function HorizontalScrollableCards() {
       const currentCard = Math.ceil(scrollProgress * sampleDrinks.length) || 1;
       
       setCurrentIndex(Math.min(Math.max(currentCard, 1), sampleDrinks.length));
+      setCurrentIndex1(Math.min(Math.max(currentCard, 1), sampleDrinks.length));
     };
 
     // Initial calculation
@@ -192,7 +194,7 @@ export default function HorizontalScrollableCards() {
         {/* Scroll Position Indicator */}
         <div className="flex justify-center mt-2">
           <div className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-600 dark:text-gray-400 font-medium">
-            {currentIndex} / {sampleDrinks.length}
+            {currentIndex1} / {sampleDrinks.length}
           </div>
         </div>
       </div>
