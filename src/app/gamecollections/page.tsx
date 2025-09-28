@@ -35,9 +35,9 @@ const ProductCard: React.FC<{ drink: Drink }> = ({ drink }) => {
   return (
     <a
       href={`/drinks/${drink.id}`}
-      className="group relative bg-[#1a1816] rounded-2xl p-4 text-white shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col h-[380px] w-[260px] snap-start"
+      className="group relative bg-[#1a1816] rounded-2xl p-4 text-white shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col h-[290px] w-[200px] snap-start"
     >
-      <div className="relative overflow-hidden rounded-xl h-[300px]">
+      <div className="relative overflow-hidden rounded-xl h-[290px]">
         <img
           src={drink.image}
           alt={drink.name}
@@ -54,7 +54,7 @@ const ProductCard: React.FC<{ drink: Drink }> = ({ drink }) => {
         </h2>
       </div>
 
-      <div className="absolute bottom-3 right-3  w-10 h-10 rounded-full bg-white group-hover:bg-lime-400 flex items-center justify-center">
+      <div className="absolute bottom-3 right-3 w-6 h-6 rounded-full bg-white group-hover:bg-lime-400 flex items-center justify-center">
         <svg
           className="w-5 h-5 text-black"
           viewBox="0 0 24 24"
@@ -95,11 +95,12 @@ export default function GameCollections() {
         </h1>
       </div>
 
-      <div className="relative ml-3 md:ml-10">
+      <div className="relative">
         {/* Horizontal scroll container */}
+        
         <div
           ref={containerRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
+          className="flex grid-cols-2 ml-5 mr-0 md:grid-cols-3 xl:grid-cols-4 md:ml-10 gap-2 xl:gap-8  overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
           style={{ scrollSnapType: "x mandatory" }}
           role="list"
         >
@@ -123,7 +124,7 @@ export default function GameCollections() {
             }
           `}</style>
         </div>
-        <div></div>
+
       </div>
       <div className="flex ml-3 md:ml-10 mt-4">
         <h1
@@ -133,11 +134,12 @@ export default function GameCollections() {
         </h1>
       </div>
 
-      <div className="relative ml-3 md:ml-10">
+      <div className="relative">
         {/* Horizontal scroll container */}
+        
         <div
           ref={containerRef}
-          className="flex gap-4 overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
+          className="flex grid-cols-2 ml-5 xl:ml-10 mr-0 md:grid-cols-3 xl:grid-cols-4 md:ml-10 gap-2 xl:gap-8  overflow-x-auto no-scrollbar snap-x snap-mandatory px-2 py-2 scrollbar-thin scrollbar-thumb-rounded scrollbar-track-rounded"
           style={{ scrollSnapType: "x mandatory" }}
           role="list"
         >
@@ -161,7 +163,7 @@ export default function GameCollections() {
             }
           `}</style>
         </div>
-        <div></div>
+
       </div>
     </div>
   );
