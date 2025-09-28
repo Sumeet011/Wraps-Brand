@@ -89,7 +89,7 @@ export const CardSwipe: React.FC<CarouselProps> = ({
                       />
                     </div>
                   </SwiperSlide>
-                ))
+                ))}
               </Swiper>
           </div>
         </div>
